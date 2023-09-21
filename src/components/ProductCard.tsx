@@ -25,7 +25,7 @@ export default function ProductCard(props: CardProps) {
 
         for (let i = 0; i < Math.round(rating); i++) {
             stars.push(
-                <svg aria-hidden="true" key={i} className="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-hidden="true" key={i} className="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                 </svg>)
         }
@@ -44,21 +44,24 @@ export default function ProductCard(props: CardProps) {
                 }}
             />
 
-            <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border-2  border-gray-100 bg-white shadow-lg">
-                <a className="relative mx-3 mt-3 flex justify-center h-60 overflow-hidden rounded-xl" href="#">
-                    <Image placeholder="empty" loading="lazy" height={240} width={294} objectFit="cover" className=" object-cover hover:scale-125 transition-all" alt={`image-${props.pdt.title}`} src={props.pdt.thumbnail} />
-                    <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">{props.pdt.discountPercentage}% OFF</span>
+            <div className="relative flex flex-col w-full max-w-xs m-10 overflow-hidden bg-white border-2 border-gray-100 rounded-lg shadow-lg">
+                <a className="relative flex justify-center mx-3 mt-3 overflow-hidden h-60 rounded-xl" href="#">
+                    <Image placeholder="empty" loading="lazy" height={240} width={294} objectFit="cover" className="object-cover transition-all hover:scale-125" alt={`image-${props.pdt.title}`} src={props.pdt.thumbnail} />
+                    <span className="absolute top-0 left-0 px-2 m-2 text-sm font-medium text-center text-white bg-black rounded-full">{props.pdt.discountPercentage}% OFF</span>
                 </a>
-                <div className="mt-4 px-5 pb-5">
+                <div className="px-5 pb-5 mt-4">
                     <a href="#">
                         <h5 className="text-xl tracking-tight text-slate-900">{props.pdt.title}</h5>
                     </a>
-                    <div className="mt-2 mb-5 flex items-center justify-between">
+                    <a href="#" className="">
+                        <span className="px-2 py-1 text-xs tracking-tight text-white bg-slate-950 rounded-xl"> {props.pdt.category} </span>
+                    </a>
+                    <div className="flex items-center justify-between mt-2 mb-5">
                         <p>
                             <span className="text-3xl font-bold text-slate-900">${props.pdt.price}</span>
-                            <span className="text-sm text-slate-900 line-through">${(props.pdt.price * 100 / (100 - props.pdt.discountPercentage)).toPrecision(4)}</span>
+                            <span className="text-sm line-through text-slate-900">${(props.pdt.price * 100 / (100 - props.pdt.discountPercentage)).toPrecision(4)}</span>
                         </p>
-                        <div className="flex items-center shadow-lg">
+                        <div className="flex items-center ">
                             {rating(props.pdt.rating)}
                             <span className="mr-2 ml-3 rounded bg-yellow-200 px-2.5 py-0.5 text-xs font-semibold">{props.pdt.rating}</span>
                         </div>
@@ -70,7 +73,7 @@ export default function ProductCard(props: CardProps) {
                             duration: 1500,
                             style: {
                                 borderRadius: 8,
-                                border: '2px solid black',
+                                border: '1px solid black',
                                 padding: '5px 10px',
                                 color: '#713200',
                                 boxShadow: 'none',
@@ -80,7 +83,7 @@ export default function ProductCard(props: CardProps) {
                             
                         }); dispatch({ type: "INCREMENT", payload: { id: props.pdt.id, pdt: props.pdt } })
                     }} className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                         Add to cart

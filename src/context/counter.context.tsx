@@ -6,12 +6,17 @@ import React, { Dispatch, createContext, useReducer } from "react";
 type StateType = {
   count: number;
   cart: Map<number, cartPdt>;
-  price:number
+  price: number,
+  allPdts: Product[]
 };
 
 type ActionPayload = {
   id: number,
   pdt: Product,
+};
+
+type ProductsPayload = {
+  pdts: Product[],
 };
 
 type cartPdt = {
@@ -29,30 +34,46 @@ type ActionType = {
 const initialState: StateType = {
   count: 0,
   cart: new Map<number, cartPdt>,
-  price: 0
+  price: 0,
+  allPdts: []
 };
 
+
+
 const reducer = (state: StateType, action: ActionType) => {
-  const { id, pdt } = action.payload;
-  let count = state.cart.get(id)?.qty || 0;
+
   switch (action.type) {
-    case "INCREMENT":
-      state.cart.set(id,{ id:id, pdt:pdt,qty: count + 1})
-      state.price+= pdt.price;
+    case "INCREMENT": {
+      const { id, pdt } = action.payload;
+      let count = state.cart.get(id)?.qty || 0;
+      state.cart.set(id, { id: id, pdt: pdt, qty: count + 1 })
+      state.price += pdt.price;
       return { ...state, count: state.count + 1 };
-    case "DECREMENT":
+    }
+    case "DECREMENT": {
+      const { id, pdt } = action.payload;
+      let count = state.cart.get(id)?.qty || 0;
       if (count > 0) {
-        state.cart.set(id, { id:id, pdt:pdt,qty: count - 1})
-        state.price-= pdt.price;
+        state.cart.set(id, { id: id, pdt: pdt, qty: count - 1 })
+        state.price -= pdt.price;
         if (count == 1) state.cart.delete(id)
-        return { ...state, count: state.count -1 };
+        return { ...state, count: state.count - 1 };
       }
       return { ...state };
-    case "RESET":
+    }
+    case "RESET": {
+      const { id, pdt } = action.payload;
+      let count = state.cart.get(id)?.qty || 0;
       if (count > 0) {
-        state.price-= (pdt.price*count);
-        state.cart.delete(id)}
+        state.price -= (pdt.price * count);
+        state.cart.delete(id)
+      }
       return { ...state, count: state.count - count };
+    }
+    case "ADD": {
+      // state.allPdts = action.payload
+        return { ...state };
+    }
     default:
       return state;
   }
